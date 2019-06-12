@@ -1,0 +1,27 @@
+{
+  "name": "46andmix",
+  "version": "1.0.0",
+  "description": "23andMe for PETS; what kind of horse do you want? DNA testing for horses",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forkaia/46andMix.git"
+  },
+  "author": "forkaia tarek el-hajjaoui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/forkaia/46andMix/issues"
+  },
+  "homepage": "https://github.com/forkaia/46andMix#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.5.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
