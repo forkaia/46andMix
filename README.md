@@ -1,2 +1,2 @@
 # 46andMix
-23andMe for PETS; what breed is your dog really? DNA testing for pets 
+23andMe for PETS; what kind of horse do you want? DNA testing for horses
