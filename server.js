@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const usersRouter = require("./routes/api/users.js");
-const loginRouter = require("./routes/api/login");
 
 require("dotenv").config();
 
@@ -11,8 +10,6 @@ require("dotenv").config();
 app.use(express.json());
 // the router that serves the users api calls
 app.use("/users", usersRouter);
-// the router that serves the login api calls
-app.use("/login", loginRouter);
 
 // MongoDB accessed from a URI
 // that is saved in .env file
