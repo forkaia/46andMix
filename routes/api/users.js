@@ -1,15 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Users = require("../../models/Users");
-
-// router.get("/", (req, res) => {
-//   res.send("test");
-// });
+const db = require("../../models/Users");
+const bcrypt = require("bcrypt");
 
 // @route '/users'
 // HTTP GET request that gets all of the users
 router.get("/", (req, res) => {
-  Users.find()
+  db.find()
     .then(users => users)
     .then(result => res.json(result))
     .catch(err => console.log(err));
@@ -24,24 +21,31 @@ router.post("/", (req, res) => {
     username: req.body.username
   };
   const { email, password, username } = user;
+  const saltRounds = 10; // the cost factor for generating a hashed password, the higher the cost the more hashing but also more time it takes
 
-  Users.create({
-    email,
-    password,
-    username
-  })
-    .then(user => res.json(user))
-    .then(user => Users(user).save)
-    .catch(err => {
-      if (err) return console.log(err);
+  // first generate a salt with amount of salt rounds
+  bcrypt.genSalt(saltRounds, (err, salt) => {
+    // take salt as an argument in the bcrypt hash method to generate hashed password
+    bcrypt.hash(password, salt, (err, hash) => {
+      db.create({
+        email,
+        password: hash, // stores the hashed password into the MongoDB
+        username
+      })
+        .then(user => res.json(user))
+        .then(user => Users(user).save)
+        .catch(err => {
+          if (err) return console.log(err);
+        });
     });
+  });
 });
 
 // @route '/users'
 // HTTP DELETE request that deletes all of the users
 router.delete("/:id", (req, res) => {
   userId = req.params.id;
-  Users.remove({
+  db.remove({
     _id: userId
   })
     .then(user => res.json(user))
@@ -59,7 +63,7 @@ router.put("/:id", (req, res) => {
   };
   const { email, password, username } = updatedUser;
 
-  Users.findByIdAndUpdate(
+  db.findByIdAndUpdate(
     {
       _id: userId
     },
